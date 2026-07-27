@@ -1,0 +1,12 @@
+{
+  "name": "coffee-monorepo",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "apps/*"
+  ],
+  "scripts": {
+    "build": "npm run build --workspace=grounds-coffee-journal",
+    "dev": "npm run dev --workspace=grounds-coffee-journal"
+  }
+}

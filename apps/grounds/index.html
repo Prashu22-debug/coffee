@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>grounds — coffee journal</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/src/style.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar">
+        <a class="brand" href="#"><span class="brand-mark">g</span><span>grounds</span></a>
+        <nav>
+          <a class="nav-item active" href="#brew"><span>◉</span> Brew</a>
+          <a class="nav-item" href="#journal"><span>▤</span> Journal</a>
+          <a class="nav-item" href="#coffee"><span>◇</span> Coffee library</a>
+          <a class="nav-item" href="#gear"><span>⌁</span> Gear</a>
+        </nav>
+        <div class="sidebar-bottom">
+          <div class="tiny-label">THIS WEEK</div>
+          <div class="week-brews"><b>08</b><span>brews logged</span></div>
+          <div class="profile"><div class="avatar">PT</div><div><b>Prashant</b><small>Home barista</small></div><button aria-label="Profile menu">•••</button></div>
+        </div>
+      </aside>
+
+      <main>
+        <header>
+          <div><p class="eyebrow">MONDAY, JULY 28</p><h1>Good morning, Prashant.</h1><p class="subhead">What are we brewing today?</p></div>
+          <div class="header-actions"><button class="icon-button" aria-label="Notifications">♢</button><button class="scan-button" id="scanButton"><span>⌁</span> Scan coffee</button></div>
+        </header>
+
+        <section class="coffee-card" id="coffee">
+          <div class="coffee-art"><div class="bean bean-one"></div><div class="bean bean-two"></div><div class="bean bean-three"></div><span>COFFEE<br>NOTES</span></div>
+          <div class="coffee-info">
+            <div class="section-top"><span class="tag">ETHIOPIA</span><button class="text-button" id="changeCoffee">Change</button></div>
+            <h2>Halo Beriti</h2><p class="roaster">Tim Wendelboe <span>·</span> Washed</p>
+            <div class="facts"><div><small>VARIETAL</small><b>Heirloom</b></div><div><small>ALTITUDE</small><b>1,950–2,100m</b></div><div><small>ROAST</small><b>Light</b></div></div>
+          </div>
+          <div class="tasting"><p class="tiny-label">CUP PROFILE</p><div class="flavor-row"><span>Peach</span><span>Jasmine</span><span>Black tea</span></div><p>Bright and floral, with a soft stone-fruit sweetness.</p><button class="text-button">View coffee details →</button></div>
+        </section>
+
+        <section class="workflow" id="brew">
+          <div class="workflow-heading"><div><p class="eyebrow">NEW BREW</p><h2>Dial in your cup</h2></div><div class="progress"><span class="done">1</span><i></i><span>2</span><i></i><span>3</span><i></i><span>4</span></div></div>
+          <div class="brew-grid">
+            <article class="panel method-panel">
+              <div class="panel-title"><span class="step">01</span><div><h3>Choose a method</h3><p>How are you brewing?</p></div></div>
+              <div class="method-list" id="methodList">
+                <button class="method selected" data-method="Pour over"><span class="method-icon">⌄</span><b>Pour over</b><small>Filtered & clean</small></button>
+                <button class="method" data-method="Espresso"><span class="method-icon">◒</span><b>Espresso</b><small>Rich & concentrated</small></button>
+                <button class="method" data-method="French press"><span class="method-icon">▱</span><b>French press</b><small>Full-bodied</small></button>
+                <button class="method" data-method="AeroPress"><span class="method-icon">↕</span><b>AeroPress</b><small>Versatile & smooth</small></button>
+              </div>
+            </article>
+
+            <article class="panel configuration-panel">
+              <div class="panel-title"><span class="step">02</span><div><h3>Set your gear</h3><p>Grinder & dripper</p></div></div>
+              <label class="field-label" for="grinder">HANDGRINDER</label>
+              <div class="select-wrap"><select id="grinder"><option>1Zpresso K-Ultra</option><option>Comandante C40 MK4</option><option>Timemore Chestnut X</option><option>Fellow Opus</option><option>Kingrinder K6</option></select><span>⌄</span></div>
+              <div class="grind-head"><label class="field-label" for="microns">GRIND SIZE</label><b id="micronValue">780 μm</b></div>
+              <input id="microns" type="range" min="400" max="1100" value="780" step="10" />
+              <div class="range-labels"><span>Fine</span><span>Medium</span><span>Coarse</span></div>
+              <label class="field-label" for="dripper">DRIPPER</label>
+              <div class="select-wrap"><select id="dripper"><option>Hario V60 02</option><option>Kalita Wave 185</option><option>Origami Dripper M</option><option>April Brewer</option><option>Orea V4</option><option>Fellow Stagg [X]</option></select><span>⌄</span></div>
+            </article>
+
+            <article class="panel recipe-panel">
+              <div class="panel-title"><span class="step">03</span><div><h3>Build your recipe</h3><p>Set the essentials</p></div></div>
+              <div class="recipe-inputs"><label><span>COFFEE</span><div><input value="15" type="number" /><em>g</em></div></label><label><span>WATER</span><div><input value="250" type="number" /><em>g</em></div></label><label><span>TEMP</span><div><input value="93" type="number" /><em>°C</em></div></label></div>
+              <div class="ratio"><span>BREW RATIO</span><b>1 : <output id="ratioOutput">16.7</output></b><button id="timerButton">Start timer <span>↗</span></button></div>
+              <div class="pour-plan"><div><span>01</span><b>Bloom</b><small>50g · 00:00–00:45</small></div><div><span>02</span><b>First pour</b><small>100g · 00:45–01:30</small></div><div><span>03</span><b>Finish</b><small>100g · 01:30–02:30</small></div></div>
+            </article>
+          </div>
+        </section>
+
+        <section class="review-section">
+          <div class="review-copy"><p class="eyebrow">AFTER THE LAST SIP</p><h2>How did it taste?</h2><p>Capture the little details while the cup is still fresh.</p></div>
+          <div class="review-form"><div class="rating-line"><span>OVERALL RATING</span><div class="stars" id="stars" aria-label="Rate this coffee"><button data-rate="1">★</button><button data-rate="2">★</button><button data-rate="3">★</button><button data-rate="4">★</button><button data-rate="5">★</button></div><b id="ratingText">Tap to rate</b></div><textarea id="comments" placeholder="A little sweeter at this temperature. Peach tea, soft florals..."></textarea><div class="review-actions"><span id="saveMessage">Your notes are saved privately.</span><button class="save-button" id="saveButton">Save brew <span>→</span></button></div></div>
+        </section>
+
+        <section class="share-card-wrap" id="shareArea">
+          <div class="share-preview"><div class="share-top"><span class="brand-mark">g</span><span>grounds / brew log</span><small>28 JUL 2026</small></div><div><p>ETHIOPIA · HALO BERITI</p><h2 id="shareMethod">Pour over</h2><div class="share-details"><span id="shareGrinder">1Zpresso K-Ultra · 780μm</span><span>15g / 250g / 93°C</span></div></div><div class="share-bottom"><b id="shareScore">★★★★★</b><span>Peach · Jasmine · Black tea</span></div></div>
+          <div class="share-copy"><p class="eyebrow">MAKE IT YOURS</p><h2>One cup worth sharing.</h2><p>Turn today’s brew into a clean little card for your coffee people.</p><button class="share-button" id="shareButton">Generate share card <span>↗</span></button></div>
+        </section>
+      </main>
+    </div>
+    <div class="modal" id="scanModal" aria-hidden="true"><div class="modal-box"><button class="close-modal" id="closeModal">×</button><div class="scan-orbit">⌁</div><p class="eyebrow">COFFEE SCANNER</p><h2>Scan a coffee packet</h2><p>Use your camera to capture the label, or use a sample packet to preview automatic origin, varietal, altitude and roast extraction.</p><button class="modal-primary" id="sampleScan">Use sample packet</button><small>Camera scanning will be available when deployed.</small></div></div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
