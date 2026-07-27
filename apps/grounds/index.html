@@ -39,7 +39,7 @@
             <h2>Halo Beriti</h2><p class="roaster">Tim Wendelboe <span>·</span> Washed</p>
             <div class="facts"><div><small>VARIETAL</small><b>Heirloom</b></div><div><small>ALTITUDE</small><b>1,950–2,100m</b></div><div><small>ROAST</small><b>Light</b></div></div>
           </div>
-          <div class="tasting"><p class="tiny-label">CUP PROFILE</p><div class="flavor-row"><span>Peach</span><span>Jasmine</span><span>Black tea</span></div><p>Bright and floral, with a soft stone-fruit sweetness.</p><button class="text-button">View coffee details →</button></div>
+          <div class="tasting"><p class="tiny-label">CUP PROFILE</p><div class="flavor-row" id="flavorProfile"><button data-flavor="Peach" class="active">Peach</button><button data-flavor="Jasmine">Jasmine</button><button data-flavor="Black tea">Black tea</button></div><p>Bright and floral, with a soft stone-fruit sweetness.</p><button class="text-button">View coffee details →</button></div>
         </section>
 
         <section class="workflow" id="brew">
@@ -70,7 +70,9 @@
               <div class="panel-title"><span class="step">03</span><div><h3>Build your recipe</h3><p>Set the essentials</p></div></div>
               <div class="recipe-inputs"><label><span>COFFEE</span><div><input value="15" type="number" /><em>g</em></div></label><label><span>WATER</span><div><input value="250" type="number" /><em>g</em></div></label><label><span>TEMP</span><div><input value="93" type="number" /><em>°C</em></div></label></div>
               <div class="ratio"><span>BREW RATIO</span><b>1 : <output id="ratioOutput">16.7</output></b><button id="timerButton">Start timer <span>↗</span></button></div>
-              <div class="pour-plan"><div><span>01</span><b>Bloom</b><small>50g · 00:00–00:45</small></div><div><span>02</span><b>First pour</b><small>100g · 00:45–01:30</small></div><div><span>03</span><b>Finish</b><small>100g · 01:30–02:30</small></div></div>
+              <div class="pour-controls"><div><span class="field-label">POUR PLAN</span><div class="pour-options" id="pourOptions"><button class="selected" data-pours="3">3 <small>balanced</small></button><button data-pours="4">4 <small>clarity</small></button><button data-pours="5">5 <small>4:6 style</small></button></div></div><button class="suggest-button" id="suggestButton">✦ Use suggested timing</button></div>
+              <p class="recipe-hint" id="recipeHint">Balanced V60 · 45 sec bloom, then two steady pours.</p>
+              <div class="pour-plan editable" id="pourPlan"></div>
             </article>
           </div>
         </section>

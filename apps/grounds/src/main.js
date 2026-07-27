@@ -52,10 +52,66 @@ $('#dripper').addEventListener('change', updateShare);
 renderModels('grinder');
 renderModels('dripper');
 
+let pourCount = 3;
+const profileHints = {
+  3: 'Balanced V60 · 45 sec bloom, then two steady pours.',
+  4: 'Clarity-focused · 40 sec bloom, then three gentle pours.',
+  5: '4:6 inspired · five equal pulses to tune sweetness and body.'
+};
+const formatSeconds = (seconds) => `${String(Math.floor(seconds / 60)).padStart(2, '0')}:${String(seconds % 60).padStart(2, '0')}`;
+const renderPourPlan = () => {
+  const [coffee, water] = [...document.querySelectorAll('.recipe-inputs input')].map((el) => Number(el.value));
+  const bloom = Math.min(Math.round(coffee * 2), Math.round(water * 0.25));
+  const remainingPours = pourCount - 1;
+  const remainder = Math.max(0, water - bloom);
+  const base = Math.floor(remainder / remainingPours);
+  const durations = pourCount === 5 ? [40, 70, 100, 130, 160] : pourCount === 4 ? [40, 75, 110, 145] : [45, 95, 145];
+  const names = ['Bloom', ...Array.from({ length: remainingPours }, (_, index) => index === remainingPours - 1 ? 'Finish' : `Pour ${index + 1}`)];
+  $('#pourPlan').innerHTML = names.map((name, index) => {
+    const dose = index === 0 ? bloom : base + (index === pourCount - 1 ? remainder - base * remainingPours : 0);
+    const start = index === 0 ? 0 : durations[index - 1];
+    const end = durations[index];
+    return `<div class="pour-row"><span>${String(index + 1).padStart(2, '0')}</span><b>${name}</b><label><input type="number" value="${dose}" min="0" aria-label="${name} water" />g</label><label><input type="text" value="${formatSeconds(start)}" aria-label="${name} start time" />–<input type="text" value="${formatSeconds(end)}" aria-label="${name} end time" /></label></div>`;
+  }).join('');
+  $('#recipeHint').textContent = profileHints[pourCount];
+};
+
+$('#pourOptions').addEventListener('click', (event) => {
+  const option = event.target.closest('button');
+  if (!option) return;
+  pourCount = Number(option.dataset.pours);
+  document.querySelectorAll('#pourOptions button').forEach((item) => item.classList.toggle('selected', item === option));
+  renderPourPlan();
+});
+$('#suggestButton').addEventListener('click', renderPourPlan);
+
 document.querySelectorAll('.recipe-inputs input').forEach((input) => input.addEventListener('input', () => {
   const values = [...document.querySelectorAll('.recipe-inputs input')].map((el) => Number(el.value));
   if (values[0] && values[1]) $('#ratioOutput').textContent = (values[1] / values[0]).toFixed(1);
+  renderPourPlan();
 }));
+renderPourPlan();
+
+const flavorPalettes = {
+  Peach: ['#dd7045', '#f4bd70'],
+  Jasmine: ['#7661a6', '#c7acd8'],
+  'Black tea': ['#5b422f', '#bd9164'],
+  Berry: ['#a84d67', '#e59ba3'],
+  Citrus: ['#db9228', '#f4d36c'],
+  Chocolate: ['#51372f', '#b27750'],
+  Nutty: ['#9b6a3d', '#d6ad6b']
+};
+const setCardPalette = (flavor) => {
+  const [base, ring] = flavorPalettes[flavor] || flavorPalettes.Peach;
+  $('#shareArea').style.setProperty('--card-color', base);
+  $('#shareArea').style.setProperty('--card-ring', ring);
+  $('#flavorProfile').querySelectorAll('button').forEach((item) => item.classList.toggle('active', item.dataset.flavor === flavor));
+};
+$('#flavorProfile').addEventListener('click', (event) => {
+  const flavor = event.target.closest('button')?.dataset.flavor;
+  if (flavor) setCardPalette(flavor);
+});
+setCardPalette('Peach');
 
 let rating = 0;
 $('#stars').addEventListener('click', (event) => {
@@ -107,7 +163,9 @@ $('#shareButton').addEventListener('click', async () => {
   const width = vertical ? 1080 : 1080;
   const height = vertical ? 1920 : 1080;
   const y = vertical ? { label: 520, title: 675, gear: 790, score: 1540, notes: 1620 } : { label: 390, title: 510, gear: 595, score: 875, notes: 945 };
-  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}"><rect width="${width}" height="${height}" fill="#d66a3c"/><circle cx="${width + 120}" cy="${height - 80}" r="380" fill="none" stroke="#f7b571" stroke-opacity=".52" stroke-width="2"/><circle cx="${width + 120}" cy="${height - 80}" r="300" fill="none" stroke="#f7b571" stroke-opacity=".24" stroke-width="70"/><text x="72" y="92" fill="#fff3df" font-family="Helvetica,Arial,sans-serif" font-size="21" letter-spacing="4">GROUNDS / BREW LOG</text><text x="72" y="${y.label}" fill="#fff3df" font-family="Helvetica,Arial,sans-serif" font-size="20" letter-spacing="4">ETHIOPIA · HALO BERITI</text><text x="72" y="${y.title}" fill="#fff3df" font-family="Georgia,serif" font-size="${vertical ? 92 : 86}">${method}</text><text x="72" y="${y.gear}" fill="#fff3df" font-family="Helvetica,Arial,sans-serif" font-size="22">${grinder}</text><text x="72" y="${y.score}" fill="#ffe19b" font-family="Georgia,serif" font-size="43">${score}</text><text x="72" y="${y.notes}" fill="#fff3df" font-family="Helvetica,Arial,sans-serif" font-size="18" letter-spacing="2">PEACH · JASMINE · BLACK TEA</text></svg>`;
+  const baseColor = getComputedStyle($('#shareArea')).getPropertyValue('--card-color').trim() || '#d66a3c';
+  const ringColor = getComputedStyle($('#shareArea')).getPropertyValue('--card-ring').trim() || '#f7b571';
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}"><rect width="${width}" height="${height}" fill="${baseColor}"/><circle cx="${width + 120}" cy="${height - 80}" r="380" fill="none" stroke="${ringColor}" stroke-opacity=".52" stroke-width="2"/><circle cx="${width + 120}" cy="${height - 80}" r="300" fill="none" stroke="${ringColor}" stroke-opacity=".24" stroke-width="70"/><text x="72" y="92" fill="#fff3df" font-family="Helvetica,Arial,sans-serif" font-size="21" letter-spacing="4">GROUNDS / BREW LOG</text><text x="72" y="${y.label}" fill="#fff3df" font-family="Helvetica,Arial,sans-serif" font-size="20" letter-spacing="4">ETHIOPIA · HALO BERITI</text><text x="72" y="${y.title}" fill="#fff3df" font-family="Georgia,serif" font-size="${vertical ? 92 : 86}">${method}</text><text x="72" y="${y.gear}" fill="#fff3df" font-family="Helvetica,Arial,sans-serif" font-size="22">${grinder}</text><text x="72" y="${y.score}" fill="#ffe19b" font-family="Georgia,serif" font-size="43">${score}</text><text x="72" y="${y.notes}" fill="#fff3df" font-family="Helvetica,Arial,sans-serif" font-size="18" letter-spacing="2">PEACH · JASMINE · BLACK TEA</text></svg>`;
   const download = document.createElement('a');
   download.href = URL.createObjectURL(new Blob([svg], { type: 'image/svg+xml' }));
   download.download = `grounds-halo-beriti-${shareFormat === 'story' ? '9x16-story' : '1x1-post'}.svg`;
