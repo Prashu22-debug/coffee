@@ -57,13 +57,13 @@
 
             <article class="panel configuration-panel">
               <div class="panel-title"><span class="step">02</span><div><h3>Set your gear</h3><p>Grinder & dripper</p></div></div>
-              <label class="field-label" for="grinder">HANDGRINDER</label>
-              <div class="select-wrap"><select id="grinder"><option>1Zpresso K-Ultra</option><option>Comandante C40 MK4</option><option>Timemore Chestnut X</option><option>Fellow Opus</option><option>Kingrinder K6</option></select><span>⌄</span></div>
+              <div class="gear-label-row"><label class="field-label" for="grinderBrand">HANDGRINDER</label><span>Choose maker, then model</span></div>
+              <div class="gear-selects"><div class="select-wrap"><select id="grinderBrand" aria-label="Grinder maker"><option value="1Zpresso">1Zpresso</option><option value="Comandante">Comandante</option><option value="Timemore">Timemore</option><option value="Fellow">Fellow</option><option value="Kingrinder">Kingrinder</option><option value="Kinu">Kinu</option></select><span>⌄</span></div><div class="select-wrap"><select id="grinder" aria-label="Grinder model"></select><span>⌄</span></div></div>
               <div class="grind-head"><label class="field-label" for="microns">GRIND SIZE</label><b id="micronValue">780 μm</b></div>
               <input id="microns" type="range" min="400" max="1100" value="780" step="10" />
               <div class="range-labels"><span>Fine</span><span>Medium</span><span>Coarse</span></div>
-              <label class="field-label" for="dripper">DRIPPER</label>
-              <div class="select-wrap"><select id="dripper"><option>Hario V60 02</option><option>Kalita Wave 185</option><option>Origami Dripper M</option><option>April Brewer</option><option>Orea V4</option><option>Fellow Stagg [X]</option></select><span>⌄</span></div>
+              <div class="gear-label-row"><label class="field-label" for="dripperBrand">DRIPPER</label><span>Choose maker, then model</span></div>
+              <div class="gear-selects"><div class="select-wrap"><select id="dripperBrand" aria-label="Dripper maker"><option value="Hario">Hario</option><option value="Timemore">Timemore</option><option value="MHW-3BOMBER">MHW-3BOMBER</option><option value="Orea">Orea</option><option value="Kalita">Kalita</option><option value="Origami">Origami</option><option value="April">April</option><option value="Fellow">Fellow</option></select><span>⌄</span></div><div class="select-wrap"><select id="dripper" aria-label="Dripper model"></select><span>⌄</span></div></div>
             </article>
 
             <article class="panel recipe-panel">
@@ -82,7 +82,7 @@
 
         <section class="share-card-wrap" id="shareArea">
           <div class="share-preview"><div class="share-top"><span class="brand-mark">g</span><span>grounds / brew log</span><small>28 JUL 2026</small></div><div><p>ETHIOPIA · HALO BERITI</p><h2 id="shareMethod">Pour over</h2><div class="share-details"><span id="shareGrinder">1Zpresso K-Ultra · 780μm</span><span>15g / 250g / 93°C</span></div></div><div class="share-bottom"><b id="shareScore">★★★★★</b><span>Peach · Jasmine · Black tea</span></div></div>
-          <div class="share-copy"><p class="eyebrow">MAKE IT YOURS</p><h2>One cup worth sharing.</h2><p>Turn today’s brew into a clean little card for your coffee people.</p><button class="share-button" id="shareButton">Generate share card <span>↗</span></button></div>
+          <div class="share-copy"><p class="eyebrow">MAKE IT YOURS</p><h2>One cup worth sharing.</h2><p>Choose a social-ready format and turn today’s brew into a clean little card.</p><div class="format-picker" role="group" aria-label="Share card format"><button class="format-option selected" data-format="square">1:1 <span>Square post</span></button><button class="format-option" data-format="story">9:16 <span>Story / Reel</span></button></div><button class="share-button" id="shareButton">Download 1:1 card <span>↗</span></button></div>
         </section>
       </main>
     </div>
