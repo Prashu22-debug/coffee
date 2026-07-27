@@ -22,7 +22,7 @@
         <div class="sidebar-bottom">
           <div class="tiny-label">THIS WEEK</div>
           <div class="week-brews"><b>08</b><span>brews logged</span></div>
-          <div class="profile"><div class="avatar">PT</div><div><b>Prashant</b><small>Home barista</small></div><button aria-label="Profile menu">•••</button></div>
+          <div class="profile"><div class="avatar" id="profileAvatar">PT</div><div><b id="profileName">Prashant</b><small id="profileStatus">Home barista</small></div><button id="signOutButton" aria-label="Sign out" title="Sign out">↗</button></div>
         </div>
       </aside>
 
@@ -88,6 +88,7 @@
         </section>
       </main>
     </div>
+    <div class="auth-gate" id="authGate" aria-modal="true" role="dialog" aria-labelledby="authTitle"><div class="auth-card"><div class="auth-mark"><span class="brand-mark">g</span><span>grounds</span></div><p class="eyebrow">YOUR BREW JOURNAL</p><h1 id="authTitle">Every cup,<br>remembered.</h1><p>Save recipes, track your gear and share the brews worth repeating.</p><div class="auth-actions"><button class="oauth-button" data-provider="Google"><span class="oauth-icon google">G</span>Continue with Google</button><button class="oauth-button" data-provider="Apple"><span class="oauth-icon apple">●</span>Continue with Apple</button></div><div class="auth-divider"><span>or</span></div><label class="auth-email"><span>Email address</span><input id="authEmail" type="email" placeholder="you@example.com" /></label><button class="email-button" id="emailSignIn">Continue with email <span>→</span></button><small>For this preview, sign-in creates a secure local session on this device.</small></div></div>
     <div class="modal" id="scanModal" aria-hidden="true"><div class="modal-box"><button class="close-modal" id="closeModal">×</button><div class="scan-orbit">⌁</div><p class="eyebrow">COFFEE SCANNER</p><h2>Scan a coffee packet</h2><p>Use your camera to capture the label, or use a sample packet to preview automatic origin, varietal, altitude and roast extraction.</p><button class="modal-primary" id="sampleScan">Use sample packet</button><small>Camera scanning will be available when deployed.</small></div></div>
     <script type="module" src="/src/main.js"></script>
   </body>

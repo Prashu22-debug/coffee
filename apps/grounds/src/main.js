@@ -1,5 +1,33 @@
 const $ = (s) => document.querySelector(s);
 
+const authGate = $('#authGate');
+const applySession = (name) => {
+  authGate.classList.add('hidden');
+  $('#profileName').textContent = name;
+  $('#profileAvatar').textContent = name.slice(0, 2).toUpperCase();
+  $('#profileStatus').textContent = 'Signed in';
+};
+const savedSession = localStorage.getItem('grounds-user');
+if (savedSession) applySession(savedSession);
+document.querySelectorAll('.oauth-button').forEach((button) => button.addEventListener('click', () => {
+  const provider = button.dataset.provider;
+  const name = provider === 'Apple' ? 'Coffee friend' : 'Prashant';
+  localStorage.setItem('grounds-user', name);
+  applySession(name);
+}));
+$('#emailSignIn').addEventListener('click', () => {
+  const email = $('#authEmail').value.trim();
+  if (!email || !email.includes('@')) { $('#authEmail').focus(); return; }
+  const name = email.split('@')[0].replace(/[._-]/g, ' ');
+  localStorage.setItem('grounds-user', name);
+  applySession(name);
+});
+$('#signOutButton').addEventListener('click', () => {
+  localStorage.removeItem('grounds-user');
+  authGate.classList.remove('hidden');
+  $('#profileStatus').textContent = 'Home barista';
+});
+
 const gearCatalog = {
   grinder: {
     '1Zpresso': ['K-Ultra', 'ZP6 Special', 'J-Ultra', 'Q Air'],
